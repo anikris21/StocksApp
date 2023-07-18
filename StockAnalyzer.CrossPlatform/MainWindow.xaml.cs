@@ -4,6 +4,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Newtonsoft.Json;
+using StockAnalyzer.Core;
 using StockAnalyzer.Core.Domain;
 using System;
 using System.Collections.Generic;
@@ -49,21 +50,25 @@ public partial class MainWindow : Window
     private static string API_URL = "https://ps-async.fekberg.com/api/stocks";
     private Stopwatch stopwatch = new Stopwatch();
 
-    private void Search_Click(object sender, RoutedEventArgs e)
+    private async void Search_Click(object sender, RoutedEventArgs e)
     {
         BeforeLoadingStockData();
 
-        var client = new WebClient();
+        var store = new DataStore();
+        Stocks.Items = await store.GetStockPrices(StockIdentifier.Text);
 
-        var content = client.DownloadString($"{API_URL}/{StockIdentifier.Text}");
 
-        // Simulate that the web call takes a very long time
-        Thread.Sleep(10000);
+        //var client = new WebClient();
 
-        var data = JsonConvert.DeserializeObject<IEnumerable<StockPrice>>(content);
+        //var content = client.DownloadString($"{API_URL}/{StockIdentifier.Text}");
 
-        // This is the same as ItemsSource in WPF used in the course videos
-        Stocks.Items = data;
+        //// Simulate that the web call takes a very long time
+        //Thread.Sleep(10000);
+
+        //var data = JsonConvert.DeserializeObject<IEnumerable<StockPrice>>(content);
+
+        //// This is the same as ItemsSource in WPF used in the course videos
+        //Stocks.Items = data;
 
         AfterLoadingStockData();
     }
