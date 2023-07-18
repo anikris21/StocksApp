@@ -1,0 +1,12 @@
+C:\Users\Administrator\Desktop\AsyncCS\02\demos\Cross-Platform\Start_Here\StockAnalyzer.Core\bin\Debug\net6.0\StockAnalyzer.Core.deps.json
+C:\Users\Administrator\Desktop\AsyncCS\02\demos\Cross-Platform\Start_Here\StockAnalyzer.Core\bin\Debug\net6.0\StockAnalyzer.Core.dll
+C:\Users\Administrator\Desktop\AsyncCS\02\demos\Cross-Platform\Start_Here\StockAnalyzer.Core\bin\Debug\net6.0\StockAnalyzer.Core.pdb
+C:\Users\Administrator\Desktop\AsyncCS\02\demos\Cross-Platform\Start_Here\StockAnalyzer.Core\obj\Debug\net6.0\StockAnalyzer.Core.csproj.AssemblyReference.cache
+C:\Users\Administrator\Desktop\AsyncCS\02\demos\Cross-Platform\Start_Here\StockAnalyzer.Core\obj\Debug\net6.0\StockAnalyzer.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Administrator\Desktop\AsyncCS\02\demos\Cross-Platform\Start_Here\StockAnalyzer.Core\obj\Debug\net6.0\StockAnalyzer.Core.AssemblyInfoInputs.cache
+C:\Users\Administrator\Desktop\AsyncCS\02\demos\Cross-Platform\Start_Here\StockAnalyzer.Core\obj\Debug\net6.0\StockAnalyzer.Core.AssemblyInfo.cs
+C:\Users\Administrator\Desktop\AsyncCS\02\demos\Cross-Platform\Start_Here\StockAnalyzer.Core\obj\Debug\net6.0\StockAnalyzer.Core.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Desktop\AsyncCS\02\demos\Cross-Platform\Start_Here\StockAnalyzer.Core\obj\Debug\net6.0\StockAnalyzer.Core.dll
+C:\Users\Administrator\Desktop\AsyncCS\02\demos\Cross-Platform\Start_Here\StockAnalyzer.Core\obj\Debug\net6.0\refint\StockAnalyzer.Core.dll
+C:\Users\Administrator\Desktop\AsyncCS\02\demos\Cross-Platform\Start_Here\StockAnalyzer.Core\obj\Debug\net6.0\StockAnalyzer.Core.pdb
+C:\Users\Administrator\Desktop\AsyncCS\02\demos\Cross-Platform\Start_Here\StockAnalyzer.Core\obj\Debug\net6.0\ref\StockAnalyzer.Core.dll
