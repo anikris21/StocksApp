@@ -3,12 +3,15 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Avalonia.Threading;
 using Newtonsoft.Json;
 using StockAnalyzer.Core;
 using StockAnalyzer.Core.Domain;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.InteropServices;
@@ -47,15 +50,38 @@ public partial class MainWindow : Window
 
 
 
+
     private static string API_URL = "https://ps-async.fekberg.com/api/stocks";
+
     private Stopwatch stopwatch = new Stopwatch();
 
     private async void Search_Click(object sender, RoutedEventArgs e)
     {
         BeforeLoadingStockData();
 
-        var store = new DataStore();
-        Stocks.Items = await store.GetStockPrices(StockIdentifier.Text);
+        // await GetStocks()
+
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+        Task.Run(() =>
+        {
+            var lines = File.ReadAllLines("StockPrices_Small.csv");
+            var data = new List<StockPrice>();
+            foreach (var line in lines.Skip(1))
+            {
+                data.Add(StockPrice.FromCSV(line));
+
+            }
+
+            Dispatcher.UIThread.InvokeAsync(() =>
+            {
+
+                Stocks.Items = data.Where(sp => sp.Identifier == StockIdentifier.Text).ToList();
+            });
+        });
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+
+
+
 
 
         //var client = new WebClient();
@@ -71,6 +97,21 @@ public partial class MainWindow : Window
         //Stocks.Items = data;
 
         AfterLoadingStockData();
+    }
+
+    private async Task GetStocks()
+    {
+        try
+        {
+            var store = new DataStore();
+            Stocks.Items = await store.GetStockPrices(StockIdentifier.Text);
+
+        }
+        catch (Exception ex)
+        {
+            Notes.Text = ex.Message;
+
+        }
     }
 
 
