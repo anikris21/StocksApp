@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Controls.Shapes;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
@@ -62,9 +63,39 @@ public partial class MainWindow : Window
         // await GetStocks()
 
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-        Task.Run(() =>
+        var loadLinetask = getFileData();
+        //    Task.Run(async () =>
+        //{
+        //    //var lines = File.ReadAllLines("StockPrices_Small.csv");
+        //    using var stream = new StreamReader(File.OpenRead("StockPrices_Small.csv"));
+        //    var lines = new List<string>();
+
+        //    //foreach(var line in await stream.ReadLineAsync())
+        //    while (true)
+        //    {
+        //        var line = await stream.ReadLineAsync();
+        //        if (line == null)
+        //        {
+        //            break;
+        //        }
+        //        lines.Add(line);
+        //    }
+
+        //    return lines;
+
+        //});
+
+        loadLinetask.ContinueWith(t =>
         {
-            var lines = File.ReadAllLines("StockPrices_Small.csv");
+            Dispatcher.UIThread.InvokeAsync(() =>
+            {
+                Notes.Text = t.Exception?.InnerException?.Message;
+
+            });
+        }, TaskContinuationOptions.OnlyOnFaulted);
+
+        loadLinetask.ContinueWith(t => {
+            var lines = t.Result;
             var data = new List<StockPrice>();
             foreach (var line in lines.Skip(1))
             {
@@ -77,7 +108,10 @@ public partial class MainWindow : Window
 
                 Stocks.Items = data.Where(sp => sp.Identifier == StockIdentifier.Text).ToList();
             });
+
         });
+
+
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 
 
@@ -97,6 +131,30 @@ public partial class MainWindow : Window
         //Stocks.Items = data;
 
         AfterLoadingStockData();
+    }
+
+    private Task<List<string>> getFileData()
+    {
+        return Task.Run(async () =>
+        {
+            //var lines = File.ReadAllLines("StockPrices_Small.csv");
+            using var stream = new StreamReader(File.OpenRead("StockPrices_Small.csv"));
+            var lines = new List<string>();
+
+            //foreach(var line in await stream.ReadLineAsync())
+            while (true)
+            {
+                var line = await stream.ReadLineAsync();
+                if (line == null)
+                {
+                    break;
+                }
+                lines.Add(line);
+            }
+
+            return lines;
+
+        });
     }
 
     private async Task GetStocks()
